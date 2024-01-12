@@ -1,0 +1,10 @@
+django
+termcolor
+tqdm
+tensorboard
+tensorboardX
+PyYAML
+ftfy
+regex
+tqdm
+termcolor
