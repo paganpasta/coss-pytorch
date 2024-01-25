@@ -1,1 +1,1 @@
-python compute_close_far.py --arch resnet50 --pretrained_weights /outputs/teachers/imagenet/moco-v3/linear-1000ep.pth.tar --output weights/resnet50-mocov3/imagenet_subset_100pc/ --data_path /data/imagenet/Data/CLS-LOC/ --checkpoint_key state_dict
+python compute_close_far.py --arch resnet152 --pretrained_weights /outputs/teachers/imagenet/moco-v2/seed_mocov2_r152.pth --output weights/resnet152-mocov2/imagenet_subset_100pc/ --data_path /data/imagenet/Data/CLS-LOC/ --checkpoint_key state_dict
