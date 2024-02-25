@@ -14,7 +14,7 @@ from torchvision.datasets import ImageFolder
 from tools.logger import setup_logger
 from torch.utils.tensorboard import SummaryWriter
 from wrapper import Wrapper
-from tools.utils import simclr_aug, mocov1_aug, mocov2_aug, swav_aug, adjust_learning_rate, \
+from tools.utils import SubsetDataset, simclr_aug, mocov1_aug, mocov2_aug, swav_aug, adjust_learning_rate, \
      soft_cross_entropy,  AverageMeter, ValueMeter, ProgressMeter, resume_training, \
      load_simclr_teacher_encoder, load_moco_teacher_encoder, load_swav_teacher_encoder, save_checkpoint
 from losses import coss, dino, dinoss
@@ -143,9 +143,8 @@ def main(args):
             subset_size = int(len(count)*args.subset)
             indices = indices + count[:subset_size]
         train_dataset = Subset(train_dataset, indices)
-        logger.info(f'Subset initialized with total size {len(train_dataset)}')
-
-    logger.info('Dataset defined!')
+    
+    print('Dataset initialized with total size', len(train_dataset))
     if args.sampler == 'cf':
         batch_sampler = CFBatchSampler(dataset=train_dataset, shuffle=True, drop_last=False, 
             batch_size=args.batch_size, closek_info=args.closek_info,

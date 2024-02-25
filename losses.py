@@ -69,10 +69,6 @@ def coss(t_feat, s_feat, args, **kwargs):
         tf = F.normalize(t_feat, dim=-1, p=2)/args.t_temp
         sf = F.normalize(s_feat, dim=-1, p=2)/args.s_temp
         #check random nans in vit training
-        if torch.isnan(tf).any():
-            teacher_did_it()
-        if torch.isnan(sf).any():
-            student_did_it()
         batchloss = -(tf * sf).sum(dim=-1)
         return batchloss
     

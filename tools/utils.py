@@ -5,8 +5,52 @@ import math
 import torch
 import shutil
 import random
-from PIL import ImageFilter
+from PIL import Image, ImageFilter
 import torchvision.transforms as transforms
+import os
+from torch.utils.data import Dataset
+from torchvision.datasets.folder import default_loader
+
+
+class SubsetDataset(Dataset):
+    def __init__(self, root, txt_file, transform=None, target_transform=None, loader=default_loader):
+        self.root = root
+        self.transform = transform
+        self.target_transform = target_transform
+        self.loader = loader
+
+        self.imgs = self._load_txt(txt_file)
+        self.classes, self.class_to_idx = self._find_classes(root)
+
+    def _load_txt(self, txt_file):
+        with open(txt_file, 'r') as f:
+            lines = f.readlines()
+        return [line.strip() for line in lines]
+
+    def _find_classes(self, dir):
+        classes = [d.name for d in os.scandir(dir) if d.is_dir()]
+        classes.sort()
+        class_to_idx = {cls_name: i for i, cls_name in enumerate(classes)}
+        return classes, class_to_idx
+
+    def __getitem__(self, index):
+        filename = self.imgs[index]
+        foldername = self.imgs[index].split('_')[0]
+        path = os.path.join(self.root, foldername, filename)
+        target = self.class_to_idx[foldername]
+
+        img = self.loader(path)
+
+        if self.transform is not None:
+            img = self.transform(img)
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        return img, target
+
+    def __len__(self):
+        return len(self.imgs)
+
 
 
 class GaussianBlur(object):

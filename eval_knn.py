@@ -219,10 +219,10 @@ if __name__ == '__main__':
     parser.add_argument("--local_rank", default=0, type=int, help="Please ignore and do not set this argument.")
     parser.add_argument('--data_path', default='/path/to/imagenet/', type=str)
     parser.add_argument('--eval_path', default=None, type=str)
-    parser.add_argument('--split', default=False)
+    parser.add_argument('--split', default='val')
     args = parser.parse_args()
    
-    if not args.dump_features and args.output and os.path.exists(os.path.join(args.output, 'trainfeat.pth')):
+    if args.output and os.path.exists(os.path.join(args.output, 'trainfeat.pth')):
         train_features = torch.load(os.path.join(args.output, "trainfeat.pth"))
         train_indices = torch.load(os.path.join(args.output, "trainindices.pth"))
         print('Loading train')
@@ -261,6 +261,18 @@ if __name__ == '__main__':
     top_1, _ = classic_knn_classifier(train_features, train_labels, test_features, test_labels, 10, 0.07)
     print(args.pretrained_weights)
     print(f'10NN - Top-1 {top_1}')
+    
+    top_1, _ = classic_knn_classifier(train_features, train_labels, test_features, test_labels, 10, 1.0)
+    print(args.pretrained_weights)
+    print(f'10NN - Top-1 {top_1}')
+    
+    top_1, _ = classic_knn_classifier(train_features, train_labels, test_features, test_labels, 20, 0.07)
+    print(args.pretrained_weights)
+    print(f'20NN - Top-1 {top_1}')
+    
+    top_1, _ = classic_knn_classifier(train_features, train_labels, test_features, test_labels, 50, 0.07)
+    print(args.pretrained_weights)
+    print(f'50NN - Top-1 {top_1}')
     
     #if args.output:
     #    top51_test_indices = knn_test_classifier(train_features, train_indices, test_features, 51)

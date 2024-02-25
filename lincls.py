@@ -23,7 +23,8 @@ import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
 from collections import OrderedDict
 import torchvision
-
+from tools.utils import SubsetDataset
+from torch.utils.data import Subset
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -133,7 +134,6 @@ def main_worker(args, logger):
         model.classifier.weight.data.normal_(mean=0.0, std=0.01)
         model.classifier.bias.data.zero_()
 
-    print(model)
     # load from pre-trained, before DistributedDataParallel constructor
     if args.pretrained:
         if os.path.isfile(args.pretrained):
@@ -150,14 +150,14 @@ def main_worker(args, logger):
                 #    del state_dict[k]
                 if k.startswith('module.backbone.'):
                     state_dict[k[len("module.backbone."):]] = state_dict[k]
-                if k.startswith('student.') and not k.startswith('student.fc'):
+                elif k.startswith('student.') and not k.startswith('student.fc'):
                     state_dict[k[len("student."):]] = state_dict[k]
-                if k.startswith('backbone.'):
+                elif k.startswith('backbone.'):
                     state_dict[k[len("backbone."):]] = state_dict[k]
-                if k.startswith('module.encoder_q.') and not k.startswith('module.encoder_q.fc'):
+                elif k.startswith('module.encoder_q.') and not k.startswith('module.encoder_q.fc'):
                     state_dict[k.replace('module.encoder_q.', '')] = state_dict[k]
-                #if k.startswith('module.') and not k.startswith('module.fc'):
-                #    state_dict[k[len("module."):]] = state_dict[k]
+                elif k.startswith('module.') and not k.startswith('module.fc'):
+                    state_dict[k[len("module."):]] = state_dict[k]
                 del state_dict[k]
 
             msg = model.load_state_dict(state_dict, strict=False)
@@ -177,10 +177,10 @@ def main_worker(args, logger):
     # optimize only the linear classifier
     parameters = list(filter(lambda p: p.requires_grad, model.parameters()))
     assert len(parameters) == 2 # fc.weight, fc.bias
-    args.lr_mult = args.batch_size / 256
+    args.lr_mult = 1.0 #args.batch_size / 256
     args.warmup_epochs = 5
     optimizer = torch.optim.SGD(parameters,
-                                args.lr_mult * args.lr,
+                                args.lr,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
 
@@ -239,25 +239,29 @@ def main_worker(args, logger):
             val_loader = torch.utils.data.DataLoader(ImageFolder(args.data, val_transform),batch_size=args.batch_size // dist.get_world_size(), shuffle=False, num_workers=args.workers, pin_memory=True)
             validate(val_loader, model, criterion, args)
         return
-        
-    train_dataset = ImageFolder(
-        args.data+'/train',
-        transforms.Compose([
+    transform =  transforms.Compose([
             transforms.RandomResizedCrop(224),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
-            normalize,
-        ]))
-    
-    if args.subset < 1.0:
+            normalize,])
+    train_dataset = ImageFolder(args.data+'/train', transform)
+    print(model)
+    if args.subset:
         indices, counts  = [], {i:[] for i in range(1000)}
         for idx, target in enumerate(train_dataset.targets):
             counts[target].append(idx)
         for _, count in counts.items():
             subset_size = int(len(count)*args.subset)
             indices = indices + count[:subset_size]
-        train_dataset = torch.utils.data.Subset(train_dataset, indices)
-        print('Subset initialized with total size', len(train_dataset))
+        train_dataset = Subset(train_dataset, indices) 
+    #if args.subset < 1.0:
+    #    if args.subset == 0.01:
+    #        split_filename = 'imagenet_splits/1pc.txt'
+    #    elif args.subset == 0.1:
+    #        split_filename = 'imagenet_splits/10pc.txt'
+    #    train_dataset = SubsetDataset(args.data+'/train', split_filename, transform)
+    
+    print('Subset initialized with total size', len(train_dataset))
     
     val_loader = torch.utils.data.DataLoader(ImageFolder(args.data+'/val', val_transform),batch_size=args.batch_size // dist.get_world_size(), shuffle=False, num_workers=args.workers, pin_memory=True)
     train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)

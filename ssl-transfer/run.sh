@@ -1,12 +1,15 @@
 #COSS
-python linear.py --model efficientnet_b0 --dataset cifar10   --path /rep/SEED-v2/outputs/students/imagenet/resnet50_mocov2/Loss_fuss-Beta_1.0-Epoch_200_Student_efficientnet_b0_distill-Epoch_resnet50.pth.tar.lincls/model_best.pth.tar --only-knn
+python linear.py --model resnet18 --dataset cifar10   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
 
-#SEED
-python linear.py --model efficientnet_b0 --dataset cifar10   --path /rep/SEED-v2/outputs/students/imagenet/resnet50_mocov2/SEED_Teacher_moco_T-Epoch_200_Student_efficientnet_b0_distill_resnet50.pth.tar.lincls/model_best.pth.tar --only-knn
+python linear.py --model resnet18 --dataset cifar100   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
 
-#DISCO
-python linear.py --model effb0 --dataset cifar10   --path /outputs/disco/ResNet50-EfficientB0-checkpoint_0199.pth.tar.lincls/model_best.pth.tar --only-knn
+python linear.py --model resnet18 --dataset stl10   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
 
-#BINGO
-python linear.py --model efficientnet_b0 --dataset cifar10   --path /outputs/bingo/E0-T50/unsupervised/lr-0.03_batch-256/ckpt.pth.tar.lincls/model_best.pth.tar --only-knn
+python linear.py --model resnet18 --dataset caltech101   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
+
+python linear.py --model resnet18 --dataset pets   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
+
+python linear.py --model resnet18 --dataset flowers   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
+
+python linear.py --model resnet18 --dataset dtd   --path /outputs/students/imagenet/resnet50_mocov2/resnet18/pc_100/cf_coss/close_exactK_batch64_nearest15_l0_1_l1_1/Loss_coss-Beta_1.0-Epoch_25_Student_resnet18_distill-Epoch_resnet50_subset_None_l0_1.0_l1_1.0_subset_None.pth.tar.subset_1.0.lincls/model_best.pth.tar 
 
