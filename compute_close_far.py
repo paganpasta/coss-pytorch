@@ -110,7 +110,7 @@ class ReturnIndexDataset():
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('Evaluation with weighted k-NN on ImageNet')
+    parser = argparse.ArgumentParser('Create close-far indices for the training data.')
     parser.add_argument('--pretrained_weights', default='', type=str, help="Path to pretrained weights to evaluate.")
     parser.add_argument('--arch', default='vit_small', type=str, help='Architecture')
     parser.add_argument('--output', type=str, default=None)
@@ -138,6 +138,8 @@ if __name__ == '__main__':
 
     if args.pretrained_weights:
         ckpt = torch.load(args.pretrained_weights)
+        if args.checkpoint_key not in ckpt: #assume direct state_dict
+            ckpt = {args.checkpoint_key: ckpt}
         msg = model.load_state_dict(ckpt[args.checkpoint_key], strict=False)
         if len(msg.missing_keys) > 2:
             nd = OrderedDict()
@@ -147,8 +149,8 @@ if __name__ == '__main__':
                 #if 'encoder.' in k:
                 #    nd[k[8:]] = v
             msg = model.load_state_dict(nd, strict=False)
-            print('*'*50)
-            print(msg)
+        print('*'*50)
+        print(msg)
     model.eval()
 
     train_features  = extract_feature_pipeline(model, args)

@@ -9,7 +9,7 @@ from .architectures.efficientnet import *
 from .architectures.moco.moco_resnet import *
 from .architectures.swav.swav_resnet import *
 from .architectures.simclr.simclr_resnet import *
-from .architectures.vit.vit import vit_tiny
+from .architectures.vit.vit import vit_small, vit_tiny
 #from .architectures.eff_disco.efficientnet import efficientnet_b0 as effb0
 
 '''

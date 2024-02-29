@@ -78,7 +78,9 @@ def main(args):
     if 'clip' not in args.teacher_arch:
         from collections import OrderedDict
         new_tdict = OrderedDict()
-        tdict = torch.load(args.distill)['state_dict']
+        tdict = torch.load(args.distill)
+        if 'state_dict' in tdict:
+            tdict = tdict['state_dict']
         for k,v in tdict.items():
             if 'module.' in k:
                 new_tdict[k[len('module.'):]] = v
