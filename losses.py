@@ -70,6 +70,5 @@ def coss(t_feat, s_feat, args, **kwargs):
         sf = F.normalize(s_feat, dim=-1, p=2)/args.s_temp
         #check random nans in vit training
         batchloss = -(tf * sf).sum(dim=-1)
-        return batchloss
-    
+        return batchloss 
     return args.l_0 * torch.mean(dot_p(t_feat, s_feat, args)) + args.l_1 * torch.mean(dot_p(t_feat.T, s_feat.T, args))

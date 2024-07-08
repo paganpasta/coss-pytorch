@@ -145,9 +145,6 @@ def main_worker(args, logger):
             args.start_epoch = 0
             for k in list(state_dict.keys()):
                 # retain only encoder student up to before the embedding layer
-                # if k.startswith('module.encoder_k'):  DISABLE FOR BINGO/ ENABLE FOR SEED
-                #    state_dict[k[len("module.encoder_k."):]] = state_dict[k]
-                #    del state_dict[k]
                 if k.startswith('module.backbone.'):
                     state_dict[k[len("module.backbone."):]] = state_dict[k]
                 elif k.startswith('student.') and not k.startswith('student.fc'):
@@ -156,6 +153,8 @@ def main_worker(args, logger):
                     state_dict[k[len("backbone."):]] = state_dict[k]
                 elif k.startswith('module.encoder_q.') and not k.startswith('module.encoder_q.fc'):
                     state_dict[k.replace('module.encoder_q.', '')] = state_dict[k]
+                elif k.startswith('module.student') and not k.startswith('module.fc'):
+                    state_dict[k[len("module.student."):]] = state_dict[k]
                 elif k.startswith('module.') and not k.startswith('module.fc'):
                     state_dict[k[len("module."):]] = state_dict[k]
                 del state_dict[k]
