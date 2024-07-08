@@ -39,16 +39,16 @@ As per recent studies, Self-supervised learning (SSL) does not readily extend to
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/paganpasta/coss-pytorch.git
-   cd coss-pytorch
-   ```
+```bash
+git clone https://github.com/paganpasta/coss-pytorch.git
+cd coss-pytorch
+```
 
 Install the required packages:
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+ ```bash
+ pip install -r requirements.txt
+ ```
 
 2. Data Preparation
 
@@ -59,31 +59,27 @@ Prepare your dataset as required. Ensure that the data is in the correct format 
 
 See the `compute_knn.sh` script for detailed arguments.
 
-   ```bash
-   sh scripts/compute_knn.sh
-   ```
+```bash
+sh scripts/compute_knn.sh
+```
 
 ### Distillation
 See the `scripts/cf_train.sh` for replicating various results on ImageNet.
 
-
-   ```bash
-   sh scripts/cf_train.sh
-   ```
-
+```bash
+sh scripts/cf_train.sh
+```
 
 ## Citation
 
 If you find this work useful, please cite our paper:
 
   ```bibtex
-  @inproceedings{yourname2024eccv,
-  title     = {Your Paper Title},
-  author    = {Your Name and Co-Author's Name},
+  @inproceedings{aditya2024eccv,
+  title     = {Simple Unsupervised Knowledge Distillation With Space Similarity},
+  author    = {Aditya Singh and Haohan Wang},
   booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
   year      = {2024},
-  pages     = {123-135},
-  doi       = {10.1007/978-3-030-58583-9_10},
   }
   ```
 
