@@ -20,11 +20,11 @@ As per recent studies, Self-supervised learning (SSL) does not readily extend to
 
 | Teacher             | Student   | Top-1 | Download |
 |---------------------|-----------|-------|----------|
-| ResNet-50 (moco-v2) | ResNet-18 | 62.35 |          |
-| ResNet-50 (moco-v2) | ResNet-34 | 64.01 |          |
-| ResNet-50 (moco-v2) | Eff-b0    | 67.36 |          |
-| ResNet-101(moco-v2) | ResNet-18 | 63.40 |          |
-| ResNet-50 (moco-v3) | ResNet-18 | 67.20 |          |
+| ResNet-50 (moco-v2) | ResNet-18 | 62.35 | [download](https://drive.google.com/file/d/1tDbPc1IAJtWPw_1gJ3OPvgxVCe6wWWMX/view?usp=share_link)         |
+| ResNet-50 (moco-v2) | ResNet-34 | 64.01 | [download](https://drive.google.com/file/d/1wLhE-eWeWnBUxqxMGp9iOO_6QCtudKf8/view?usp=share_link)         |
+| ResNet-50 (moco-v2) | Eff-b0    | 67.36 | [download](https://drive.google.com/file/d/1NIyDqYjfnriqM7cPdD0QjQtdtr9_A056/view?usp=share_link)         |
+| ResNet-101(moco-v2) | ResNet-18 | 63.40 | [download](https://drive.google.com/file/d/10ClZTPlsu60vh9h3YN0ygPViMGTDRT-7/view?usp=share_link)         |
+| ResNet-50 (moco-v3) | ResNet-18 | 67.20 | [download](https://drive.google.com/file/d/1tDbPc1IAJtWPw_1gJ3OPvgxVCe6wWWMX/view?usp=share_link)         |
 
 ## Preparation and Running the Method
 
@@ -53,7 +53,13 @@ Install the required packages:
 2. Data Preparation
 
 Prepare your dataset as required. Ensure that the data is in the correct format and path.
-
+```
+root/
+└── dataset/
+    └── imagenet/
+        ├── train
+        └── val
+```
 
 ### Offline K-NN
 
