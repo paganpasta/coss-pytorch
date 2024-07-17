@@ -9,13 +9,13 @@ As per recent studies, Self-supervised learning (SSL) does not readily extend to
 
 ## Method Overview
 
-![Method Overview](path/to/method_overview_image.png)
+![Method Overview](main.png)
 
 ## Experimental Results
 
 ### Table of Results
 
-![Results Table](path/to/results_table_image.png)
+![Results Table](table.png)
 
 ### Download
 
