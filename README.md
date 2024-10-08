@@ -86,7 +86,7 @@ The implementation borrows heavily from [SEED](https://github.com/jacobswan1/SEE
 If you find this work useful, please cite our paper:
 
   ```bibtex
-  @inproceedings{aditya2024eccv,
+  @inproceedings{kd_coss_2024,
   title     = {Simple Unsupervised Knowledge Distillation With Space Similarity},
   author    = {Aditya Singh and Haohan Wang},
   booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
